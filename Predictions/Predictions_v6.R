@@ -16,7 +16,7 @@ library(rgdal)
 library(raster)
 library(tictoc)
 library(INLA)
-source("Utilities/Deforestation_modutil_v4.R")
+source("Deforestation_modutil_v4.R")
 
 #### Load Deforestation dataset ----
 ## Load data, select variables and replace pland NAs with zeros
@@ -245,6 +245,11 @@ sh_17_19_25 <- st_read(dsn = "Shapefiles/Predictions", layer= "2021_Predictions"
 
 sh_18_19_25 <- st_read(dsn = "Shapefiles/Predictions", layer= "2020_Predictions") %>%
   sf::st_transform(st_crs(4326)) %>% dplyr::select(-c(grid_ID, Long, Lat))
+
+## Sum total predicted deforestation per year
+sum(sh_16_19_25$prd_df_)
+sum(sh_17_19_25$prd_df_)
+sum(sh_18_19_25$prd_df_)
 
 ### Rasterize values - 1
 library(stars)

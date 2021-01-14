@@ -16,7 +16,7 @@ library(sf)
 library(viridis)
 library(gridExtra)
 library(scales)
-source("Utilities/Deforestation_modutil_v4.R")
+source("Deforestation_modutil_v4.R")
 
 ## Load PA and IL
 PA <- st_read(dsn = "Shapefiles/PA", layer= "PA_AL") %>% 
@@ -53,9 +53,18 @@ def.2021 <- data.frame(Deforestation=c(sum(Int_17_19_PA$prd_df_), sum(Int_17_19_
                        Year=as.factor(2021), Area = c("PA", "IL"))
 def.2022 <- data.frame(Deforestation=c(sum(Int_16_19_PA$prd_df_),sum(Int_16_19_IL$prd_df_)),
                        Year=as.factor(2022), Area = c("PA", "IL"))
+
+## Percentages
+def.2022 %>% filter(Area=="PA") %>%
+  .$Deforestation / sum(sh_16_19_25$prd_df_)
+
+def.2022 %>% filter(Area=="IL") %>%
+  .$Deforestation / sum(sh_16_19_25$prd_df_)
+
+## Transform predicted values to million hectare
 def.PAIL <- bind_rows(def.2020, def.2021, def.2022) %>% 
   mutate(Area = fct_relevel(Area, "PA")) %>%
-  mutate(Deforestation = Deforestation/1000) 
+  mutate(Deforestation = Deforestation/1000000) 
 
 ## Load deforestation data
 ## 2016-2019
@@ -114,23 +123,23 @@ list.files("Cluster/2019_Data/Full_20var/grd_18_19_25", pattern="Excluded")
 INLA.RES.18_19 <- read.csv("Cluster/2019_Data/Full_20var/grd_18_19_25/INLA.RES_9.csv", head=TRUE)
 
 ## Merge rmse
-def.PAIL$RMSE.ha.1000 <- c((INLA.RES.18_19[1,2] * sum.PA.2018 * 0.09),
+def.PAIL$RMSE.ha <- c((INLA.RES.18_19[1,2] * sum.PA.2018 * 0.09),
                       (INLA.RES.18_19[1,2] * sum.IL.2018 * 0.09),
                       (INLA.RES.17_19[1,2] * sum.PA.2017 * 0.09),
                       (INLA.RES.17_19[1,2] * sum.IL.2017 * 0.09),
                       (INLA.RES.16_19[1,2] * sum.PA.2016 * 0.09),
                       (INLA.RES.16_19[1,2] * sum.IL.2016 * 0.09))
 
-def.PAIL <- def.PAIL %>%  mutate(RMSE.ha.1000 = RMSE.ha.1000/1000)
+def.PAIL <- def.PAIL %>%  mutate(RMSE.ha.million = RMSE.ha/1000000)
 
 #### Plot
 plot.PAIL <- def.PAIL %>% ggplot(aes(x=Year, y=Deforestation, fill=Area)) + 
   geom_bar(stat="identity", color="black", position=position_dodge()) + 
-  geom_errorbar(aes(ymin=Deforestation, ymax=Deforestation+RMSE.ha.1000), 
+  geom_errorbar(aes(ymin=Deforestation, ymax=Deforestation+RMSE.ha.million), 
                 width=.4, position=position_dodge(.9)) +
   scale_fill_brewer(palette="Paired", breaks=c("PA", "IL"),
                     labels=c("Protected Areas", "Indigenous lands")) +
-  ylab("Predicted deforestation (ha x 1000)") +
+  ylab("Predicted deforestation (million hectare)") +
   xlab("Year") +
   theme_bw() + theme(
     legend.position = "top", 
