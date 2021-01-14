@@ -8,7 +8,7 @@ rm(list=ls())
 gc()
 
 library(tidyverse)
-source("Utilities/Deforestation_modutil_v4.R")
+source("Deforestation_modutil_v4.R")
 
 #### Load best model formulas ----
 list.files("Cluster/2019_Data/Full_20var/grd_15_19_25", pattern="Excluded")
@@ -54,7 +54,7 @@ tp <- ggplot(RMSE.min, aes(x=year, y=min)) +
   xlab("Base year") + 
   ylab("Root Mean Square Error") +
   ylim(0.010, 0.028) +
-  theme_minimal() +
+  theme_bw() +
   theme(axis.text.x = element_text(size = 10, face = "bold"),
         axis.title.x = element_text(size = 15, face = "bold"),
         axis.title.y = element_text(size = 15, face = "bold"))

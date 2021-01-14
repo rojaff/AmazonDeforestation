@@ -22,7 +22,7 @@ library(raster)
 library(gstat)
 library(tictoc)
 library(INLA)
-source("Utilities/Deforestation_modutil_v4.R")
+source("Deforestation_modutil_v4.R")
 
 #################### Load and prepare data ----
 ## Function to load data
@@ -49,14 +49,14 @@ read_scale_data <- function(data){
 ## Load data
 list.files("Scale_test/")
 
-inla_s_5 <- read_scale_data("Scale_test/LM_grd_18_19_5.csv")
-inla_s_10 <- read_scale_data("Scale_test/LM_grd_18_19_10.csv")
-inla_s_15 <- read_scale_data("Scale_test/LM_grd_18_19_15.csv")
-inla_s_20 <- read_scale_data("Scale_test/LM_grd_18_19_20.csv")
-inla_s_25 <- read_scale_data("Scale_test/LM_grd_18_19_25.csv")
-inla_s_30 <- read_scale_data("Scale_test/LM_grd_18_19_30.csv")
-inla_s_35 <- read_scale_data("Scale_test/LM_grd_18_19_35.csv")
-inla_s_40 <- read_scale_data("Scale_test/LM_grd_18_19_40.csv")
+inla_s_5 <- read_scale_data("GridData/Spatial/LM_grd_18_19_5.csv")
+inla_s_10 <- read_scale_data("GridData/Spatial/LM_grd_18_19_10.csv")
+inla_s_15 <- read_scale_data("GridData/Spatial/LM_grd_18_19_15.csv")
+inla_s_20 <- read_scale_data("GridData/Spatial/LM_grd_18_19_20.csv")
+inla_s_25 <- read_scale_data("GridData/Spatial/LM_grd_18_19_25.csv")
+inla_s_30 <- read_scale_data("GridData/Spatial/LM_grd_18_19_30.csv")
+inla_s_35 <- read_scale_data("GridData/Spatial/LM_grd_18_19_35.csv")
+inla_s_40 <- read_scale_data("GridData/Spatial/LM_grd_18_19_40.csv")
 
 head(inla_s_40)
 nrow(inla_s_40)
@@ -112,7 +112,7 @@ points(inla_s_10[, c("Long", "Lat")], col="red", pch=19)
 #rmse.results <- data.frame(rmse_5, rmse_10, rmse_15, rmse_20, rmse_25, rmse_30, rmse_35, rmse_40)
 #rmse.table <- pivot_longer(rmse.results, cols = rmse_5:rmse_40)
 #write.csv(rmse.table, file="Scale_results.csv", row.names=FALSE)
-rmse.table <- read.csv("Scale_results.csv", head=TRUE)
+rmse.table <- read.csv("Results/Scale_results.csv", head=TRUE)
 summary(rmse.table$value)
 
 sp <- rmse.table %>% mutate(scale = c(5, 10, 15, 20, 25, 30, 35, 40)) %>%
@@ -121,7 +121,7 @@ sp <- rmse.table %>% mutate(scale = c(5, 10, 15, 20, 25, 30, 35, 40)) %>%
   xlab("Grid size (km)") +
   ylab(NULL) + 
   ylim(0.010, 0.028) +
-  theme_minimal() + 
+  theme_bw() + 
   theme(axis.text.x = element_text(size = 10, face = "bold"),
         axis.title.x = element_text(size = 15, face = "bold"),
         axis.title.y = element_text(size = 15, face = "bold"))
