@@ -390,7 +390,7 @@ map2 <- leaflet() %>% addTiles() %>%
               fillOpacity = 0.7,
               weight = 2,
               stroke = FALSE,
-              group = "2022") %>%
+              group = "2019-2022") %>%
               #color = "red",
               #highlight = highlightOptions(weight = 10,
               #                             color = "blue",
@@ -400,29 +400,29 @@ map2 <- leaflet() %>% addTiles() %>%
             fillOpacity = 0.7,
             weight = 2,
             stroke = FALSE,
-            group = "2021") %>%
+            group = "2019-2021") %>%
   addPolygons(data = sh_18_19_25,
             fillColor = ~pal.def.18(prd_df_),
             fillOpacity = 0.7,
             weight = 2,
             stroke = FALSE,
-            group = "2020") %>%
+            group = "2019-2020") %>%
   addLegend("bottomright",
             pal = pal.def.16,
-            values = sh_16_19_25$prd_df_, title = "2022 Deforestation (ha)",  group = "2022") %>%
+            values = sh_16_19_25$prd_df_, title = "2019-2022 Deforestation (ha)",  group = "2019-2022") %>%
   addScaleBar(position = c("bottomleft")) %>%
   addLegend("bottomright",
             pal = pal.def.17,
-            values = sh_17_19_25$prd_df_, title = "2021 Deforestation (ha)",  group = "2021") %>%
+            values = sh_17_19_25$prd_df_, title = "2019-2021 Deforestation (ha)",  group = "2019-2021") %>%
   addScaleBar(position = c("bottomleft")) %>%
   addLegend("bottomright",
             pal = pal.def.18,
-            values = sh_18_19_25$prd_df_, title = "2020 Deforestation (ha)",  group = "2020") %>%
+            values = sh_18_19_25$prd_df_, title = "2019-2020 Deforestation (ha)",  group = "2019-2020") %>%
   addScaleBar(position = c("bottomleft")) %>%
-  addLayersControl(overlayGroups = c("2022", "2021", "2020"), #baseGroups, overlayGroups
+  addLayersControl(overlayGroups = c("2019-2022", "2019-2021", "2019-2020"), #baseGroups, overlayGroups
                    position = "topleft",
                    options = layersControlOptions(collapsed = F)) %>%
-  hideGroup(c("2022", "2021")) 
+  hideGroup(c("2019-2022", "2019-2021")) 
 
 map2
 
