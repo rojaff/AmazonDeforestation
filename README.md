@@ -1,7 +1,7 @@
 # AmazonDeforestation
 Data and R scripts accompanying the paper "Forecasting deforestation in the Brazilian Amazon to prioritize conservation efforts". This repository contains an RStudio Project with the following folders:
 
-- DataBase: Data sources and geospatial database.
+- DataBase: Data sources and geospatial database. An updated geospatial database can be found here: https://drive.google.com/drive/folders/1v5WA52ZVZsRpNU4nM8oODx-rtnXZ-qpf?usp=sharing
 - Metrics: Set of functions to compute grid-level metrics and parallelization of grid-level metrics.
 - GridData: Example data used to run INLA-SPDE models.
 - Spatial_CV: Full model containing all 20 predictor variables & spatial blocks cross-validation, and assessment of model accuracy across temporal and spatial scales.
